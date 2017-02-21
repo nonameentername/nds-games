@@ -264,15 +264,8 @@ for (int j=0; j<15; j++)
 //---------------------------------------------------------------------------------
 u16 random ( u16 range ){
 //---------------------------------------------------------------------------------
-   time_t unixTime = time(NULL);
-   struct tm* timeStruct = gmtime((const time_t *)&unixTime);
-          
-   static u32 randSeed = timeStruct->tm_hour * timeStruct->tm_min * timeStruct->tm_sec;
 
-   randSeed *= 0x0019660D;
-   randSeed += 0x3C6EF35F;
-
-   return ((randSeed >> 16) % range);
+   return rand() % range;
 }
 
 
@@ -409,6 +402,8 @@ int main(void){
   u16 *framebuffer =VRAM_A; 
   
   u8 end=1;
+
+  srand(time(NULL));
 
   mmInitDefaultMem((mm_addr)soundbank_bin);
 
