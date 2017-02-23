@@ -1,5 +1,15 @@
+curdir = $(shell pwd)
+
+define make
+	docker run --rm -v $(1):/source -it werner/devkitpro make
+endef
+
+define clean
+	docker run --rm -v $(1):/source -it werner/devkitpro make clean
+endef
+
 all:
-	docker run -v $(abspath avalanche):/source -it werner/devkitpro make
+	$(call make, $(curdir)/avalanche)
 
 clean:
-	docker run -v $(abspath avalanche):/source -it werner/devkitpro make clean
+	$(call clean, $(curdir)/avalanche)
