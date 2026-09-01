@@ -6,6 +6,8 @@
 
 This repository includes nintendo ds games written using devkitpro.
 
+**[Play nds-games in your browser](https://nonameentername.github.io/nds-games/)**
+
 To facilitate building the following docker image is used: [werner/devkitpro](https://hub.docker.com/r/werner/devkitpro/)
 
 To build use the following:

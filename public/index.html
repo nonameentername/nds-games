@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GBA Games</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #14151b;
+            --panel: #20232d;
+            --panel-strong: #292d39;
+            --text: #f5f7fb;
+            --muted: #aeb6c8;
+            --accent: #5ed0a8;
+            --border: #383d4c;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(94, 208, 168, 0.18), transparent 34rem),
+                linear-gradient(135deg, #14151b 0%, #181d25 55%, #111319 100%);
+            color: var(--text);
+        }
+
+        main {
+            width: min(500px /* 1120px */, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 56px 0;
+        }
+
+        header {
+            margin-bottom: 28px;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            line-height: 1;
+            letter-spacing: 0;
+        }
+
+        p {
+            margin: 0;
+            max-width: 640px;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.55;
+        }
+
+        .games {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 18px;
+        }
+
+        .game-card {
+            display: block;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--panel);
+            color: inherit;
+            text-decoration: none;
+            transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+        }
+
+        .game-card:hover,
+        .game-card:focus-visible {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            background: var(--panel-strong);
+            outline: none;
+        }
+
+        .game-card img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            background: #0e1016;
+        }
+
+        .game-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 14px 16px 16px;
+        }
+
+        .game-info h2 {
+            margin: 0;
+            font-size: 1.15rem;
+            line-height: 1.2;
+            letter-spacing: 0;
+        }
+
+        .game-info span {
+            flex: 0 0 auto;
+            color: var(--accent);
+            font-size: 0.92rem;
+            font-weight: 700;
+        }
+
+        @media (max-width: 560px) {
+            main {
+                width: min(100% - 24px, 1120px);
+                padding: 32px 0;
+            }
+
+            .games {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>NDS Games</h1>
+            <p>Pick a game to launch it in the browser with the Nintendo DS emulator.</p>
+        </header>
+
+        <section class="games" aria-label="Available games">
+            <a class="game-card" href="avalanche/">
+                <img
+                    src="previews/avalanche.png"
+                    alt="Avalanche game preview">
+                <div class="game-info">
+                    <h2>Avalanche</h2>
+                    <span>Play</span>
+                </div>
+            </a>
+
+        </section>
+    </main>
+</body>
+</html>
