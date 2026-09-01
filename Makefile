@@ -13,3 +13,6 @@ all:
 
 clean:
 	$(call clean, $(curdir)/avalanche)
+
+publish:
+	cp avalanche/source.nds public/avalanche/avalanche.nds
