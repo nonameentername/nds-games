@@ -1,0 +1,70 @@
+name: builds
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.ref }}
+
+jobs:
+  build:
+    name: NDS roms build
+    runs-on: ubuntu-latest
+    env:
+      VERSION: v1
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+          submodules: recursive
+
+      - name: Build roms (Debug)
+        uses: nonameentername/docker-run-action@v3
+        with:
+          image: werner/devkitpro
+          options: -v ${{ github.workspace }}:${{ github.workspace }} --workdir ${{ github.workspace }}
+          run: |
+            make build
+
+      - name: Prepare Web build
+        uses: nonameentername/docker-run-action@v3
+        with:
+          image: werner/devkitpro
+          options: -v ${{ github.workspace }}:${{ github.workspace }} --workdir ${{ github.workspace }}
+          run: |
+            make publish
+
+      - name: Upload Web artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: nds-web
+          path: public/
+
+  publish_web:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    name: Publish to Github Pages
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Download Web artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: nds-web
+          path: public/
+
+      - name: Publish to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./public/
