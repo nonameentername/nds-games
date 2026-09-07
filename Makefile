@@ -1,18 +1,19 @@
-curdir = $(shell pwd)
-
-define make
-	docker run --rm -v $(1):/source -it werner/devkitpro make
-endef
-
-define clean
-	docker run --rm -v $(1):/source -it werner/devkitpro make clean
-endef
+.PHONY: all build clean clean-build publish shell-nds
 
 all:
-	$(call make, $(curdir)/avalanche)
+	$(MAKE) shell-nds SHELL_COMMAND='make build'
+
+shell-nds:
+	docker run --rm -v "$(CURDIR):$(CURDIR)" -w "$(CURDIR)" werner/devkitpro $(SHELL_COMMAND)
+
+build:
+	$(MAKE) -C avalanche
 
 clean:
-	$(call clean, $(curdir)/avalanche)
+	$(MAKE) shell-nds SHELL_COMMAND='make clean-build'
+
+clean-build:
+	$(MAKE) -C avalanche clean
 
 publish:
-	cp avalanche/source.nds public/avalanche/avalanche.nds
+	cp avalanche/avalanche.nds public/avalanche/avalanche.nds
